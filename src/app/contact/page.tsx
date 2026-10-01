@@ -49,10 +49,40 @@ export default function ContactPage() {
           <div className="bg-white rounded-2xl shadow-sm border border-rose-100 p-8">
             <h2 className="font-serif text-2xl text-rose-900 mb-6">Contact Info</h2>
             <div className="space-y-6 text-rose-800/80">
-              {settings.contact_email && <div><div className="text-xs uppercase tracking-wider text-rose-500 mb-1">Email</div><a href={'mailto:' + settings.contact_email} className="hover:text-rose-600">{settings.contact_email}</a></div>}
-              {settings.contact_phone && <div><div className="text-xs uppercase tracking-wider text-rose-500 mb-1">Phone</div><a href={'tel:' + settings.contact_phone} className="hover:text-rose-600">{settings.contact_phone}</a></div>}
-              {settings.address && <div><div className="text-xs uppercase tracking-wider text-rose-500 mb-1">Address</div><div className="whitespace-pre-line">{settings.address}</div></div>}
-              {!settings.contact_email && !settings.contact_phone && <p className="text-rose-800/60 text-sm">Contact details will appear here once set in the admin panel.</p>}
+              {settings.contact_email && (
+                <div>
+                  <div className="text-xs uppercase tracking-wider text-rose-500 mb-1">Email</div>
+                  <a href={'mailto:' + settings.contact_email} className="hover:text-rose-600">{settings.contact_email}</a>
+                </div>
+              )}
+              {settings.contact_phone && (
+                <div>
+                  <div className="text-xs uppercase tracking-wider text-rose-500 mb-1">Phone</div>
+                  <a href={'tel:' + settings.contact_phone} className="hover:text-rose-600">{settings.contact_phone}</a>
+                </div>
+              )}
+              {settings.address && (
+                <div>
+                  <div className="text-xs uppercase tracking-wider text-rose-500 mb-1">Address</div>
+                  <div className="whitespace-pre-line">{settings.address}</div>
+                </div>
+              )}
+              {(settings.instagram_url || settings.facebook_url) && (
+                <div>
+                  <div className="text-xs uppercase tracking-wider text-rose-500 mb-2">Follow Us</div>
+                  <div className="flex gap-4">
+                    {settings.instagram_url && (
+                      <a href={settings.instagram_url} target="_blank" rel="noreferrer" className="hover:text-rose-600">Instagram</a>
+                    )}
+                    {settings.facebook_url && (
+                      <a href={settings.facebook_url} target="_blank" rel="noreferrer" className="hover:text-rose-600">Facebook</a>
+                    )}
+                  </div>
+                </div>
+              )}
+              {!settings.contact_email && !settings.contact_phone && !settings.address && !settings.instagram_url && !settings.facebook_url && (
+                <p className="text-rose-800/60 text-sm">Contact details will appear here once set in the admin panel.</p>
+              )}
             </div>
           </div>
         </div>
