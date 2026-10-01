@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { razorpay } from '@/lib/razorpay';
+import { getRazorpay } from '@/lib/razorpay';
 import { createAdminClient } from '@/lib/supabase/admin';
 
 const schema = z.object({
@@ -26,12 +26,15 @@ export async function POST(req: Request) {
     }
 
     const amount = Number(booking.advance_amount || booking.total_amount);
-    
+
     if (!amount || amount <= 0) {
       return NextResponse.json({ error: 'Invalid amount' }, { status: 400 });
     }
 
     const amountInPaise = Math.round(amount * 100);
+
+    // ✅ Initialize Razorpay lazily, at request time
+    const razorpay = getRazorpay();
 
     const order = await razorpay.orders.create({
       amount: amountInPaise,

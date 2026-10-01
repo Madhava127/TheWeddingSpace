@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { 
   LayoutDashboard, 
   Building2, 
@@ -11,6 +14,7 @@ import {
 } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const links = [
     { name: 'Dashboard', href: '/admin', icon: <LayoutDashboard size={20} /> },
     { name: 'Halls', href: '/admin/halls', icon: <Building2 size={20} /> },
@@ -30,16 +34,21 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
         <div className="flex-1 overflow-y-auto py-4">
           <nav className="space-y-1 px-3">
-            {links.map((link) => (
-              <Link 
-                key={link.href} 
-                href={link.href}
-                className="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
-              >
-                <span className="mr-3 text-gray-400">{link.icon}</span>
-                {link.name}
-              </Link>
-            ))}
+            {links.map((link) => {
+              const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
+              return (
+                <Link 
+                  key={link.href} 
+                  href={link.href}
+                  className={`flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                    active ? 'bg-rose-600 text-white' : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                  }`}
+                >
+                  <span className={`mr-3 ${active ? 'text-white' : 'text-gray-400'}`}>{link.icon}</span>
+                  {link.name}
+                </Link>
+              );
+            })}
           </nav>
         </div>
       </aside>
