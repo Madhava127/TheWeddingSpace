@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
 import { BookingWizard } from '@/components/booking/BookingWizard';
-import RequireAuth from '@/components/auth/RequireAuth';
 
 export default async function BookPage(props: { searchParams: Promise<{ hall?: string }> }) {
   const searchParams = await props.searchParams;
@@ -17,19 +16,17 @@ export default async function BookPage(props: { searchParams: Promise<{ hall?: s
   ]);
 
   return (
-    <RequireAuth>
-      <div className="container mx-auto px-4 py-8">
-        <BookingWizard 
-          halls={halls || []} 
-          blockedDates={blockedDates || []}
-          foodCategories={foodCategories || []}
-          foodItems={foodItems || []}
-          decorationPackages={decorationPackages || []}
-          photographyPackages={photographyPackages || []}
-          settings={siteSettings || { gst_percent: 18, default_advance_percent: 20 }}
-          initialHallId={searchParams.hall || null}
-        />
-      </div>
-    </RequireAuth>
+    <div className="container mx-auto px-4 py-8">
+      <BookingWizard 
+        halls={halls || []} 
+        blockedDates={blockedDates || []}
+        foodCategories={foodCategories || []}
+        foodItems={foodItems || []}
+        decorationPackages={decorationPackages || []}
+        photographyPackages={photographyPackages || []}
+        settings={siteSettings || { gst_percent: 18, default_advance_percent: 20 }}
+        initialHallId={searchParams.hall || null}
+      />
+    </div>
   );
 }

@@ -27,7 +27,7 @@ export default function LoginPage() {
       toast.error(error.message);
     } else {
       toast.success('Logged in successfully');
-      router.push(new URLSearchParams(window.location.search).get('redirect') || '/dashboard');
+      router.push('/dashboard');
       router.refresh();
     }
     setLoading(false);
